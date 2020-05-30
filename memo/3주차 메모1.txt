@@ -1,0 +1,185 @@
+산업안전기사
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+API주소(GET 요청) → [http://spartacodingclub.shop/post
+
+
+
+](http://spartacodingclub.shop/post)
+
+
+
+
+ for (let i = 0; i < articles.length; i++) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 한줄일때
+
+/*
+
+*/
+
+여러줄일때
+
+행아웃 화면공유
+
+
+pip install notebook
+명령 프롬프트
+
+cmd
+
+설치했음
+
+
+
+변수 이름 정하는 타입 
+
+카멜 타입
+
+camel snake type
+
+
+카멜
+
+UserCamel
+
+스네이크
+user_snake
+
+
+
+	if num % 2 == 0: # num을 2로 나눈 나머지가 0이면
+
+
+
+
+해커 랭크
+
+장고 DB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ipdb.set_trace()
+
+
+ipdb
+
+
+
+
+코드
+import ipdb
+
+ipdb.set_trace()
+
+
+
+pip install pymongo
+
+
+
+
+
+
+
+
+
+
+   
+  
+
+  nosql
+
+
+  rdbs
+myql
+
+oracle
+
+
+
+let의 기능
+
+for
+
+function 의 기능들
+
+단어의 기능들
+
+
+
+
+지니뮤직의 1~50위 곡을 스크래핑 해보세요.
+[https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200403&hh=23&rtm=N&pg=1](https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200403&hh=23&rtm=N&pg=1)
+
+
+refector variable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
