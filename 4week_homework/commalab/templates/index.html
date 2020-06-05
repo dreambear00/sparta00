@@ -1,0 +1,219 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+    <title>콤마랩 쇼핑몰</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+
+
+
+
+    <style type="text/css">
+        * {
+            font-family: 'Gugi', cursive;
+
+        }
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .comment {
+            color: coral;
+            font-weight: bold;
+        }
+
+        #post-box {
+            width: 900px;
+            margin: 20px auto;
+            padding: 50px;
+            border: skyblue;
+            border-radius: 5px;
+        }
+
+        .rate {
+            color: blue;
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {},
+                success: function (response) {
+                    let USDKRW = response[1]["rate"];
+                    $('#rate').append("1달러-원 환율: " + USDKRW);
+                }
+            })
+            read_reviews();
+
+        })
+
+
+
+        function coma() {
+
+            let name_receive = $('#name').val();
+            let phone_receive = $('#phone').val();
+            let address_receive = $('#address').val();
+            let number_receive = $('#number').val();
+            if (name_receive == '') {
+                alert('성함을 입력해주세요');
+                $('#name').focus();
+                return
+            }
+
+            if (phone_receive == '') {
+                alert('휴대폰번호를 입력해주세요');
+                $('#phone').focus();
+                return
+            }
+
+            if (address_receive == '') {
+                alert('주소를 입력해주세요');
+                $('#address').focus();
+                return
+            }
+
+            if (number_receive == '') {
+                alert('수량을 선택해주세요');
+                $('#number').focus();
+                return
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/commalab",
+                data: { name_give: name_receive, phone_give: phone_receive, address_give: address_receive, number_give: number_receive },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    } else {
+                        alert('Error!!');
+                    }
+                }
+            })
+        }
+
+        function read_reviews() {
+            $.ajax({
+                type: "GET",
+                url: "/commalab",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let purchases = response['purchases'];
+                        for (let i = 0; i < purchases.length; i++) {
+                            make_purchase(purchases[i]['name'], purchases[i]['phone'], purchases[i]['address'], purchases[i]['number'])
+                        }
+                    }
+                    else {
+                        alert('Error!')
+                    }
+                }
+
+            })
+        }
+
+        function make_purchase(name, phone, address, number) {
+            let temp_html = `<tr>
+                 <td>${name}</th>
+                 <td>${phone}</td>
+                 <td>${address}</td>
+                 <td>${number}</td>
+               
+            </tr>`;
+            $('#purchases-box').append(temp_html);
+        }
+    </script>
+
+</head>
+
+
+
+<body>
+    <div class="wrap">
+        <div class="form-post" id="post-box">
+            <img src="https://img.hankyung.com/photo/201905/BD.19745613.1.jpg" class="img-fluid">
+
+        </div>
+        <div class="form-post" id="post-box">
+            <h1 class="display-4">*코딩 학습 교구재 콤마랩 판매*</h1>
+            <hr class="my-4">
+            <p class="lead">가격 : 29,000원 / 개</p>
+            <p class="lead">아두이노와 블록코딩을 활용하여 누구나 쉽고 재밌게 아이와 학습할 수 있습니다.</p>
+            <hr class="my-4">
+            <div id="rate" class="rate"></div>
+
+
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="form-group">
+                <label for="name">주문자 성함</label>
+                <input type="text" class="form-control" id="name" placeholder="예: 김철수">
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호</label>
+                <input type="text" class="form-control" id="phone" placeholder="예: 010-0000-0000">
+            </div>
+            <div class="form-group">
+                <label for="address">주소</label>
+                <input type="text" class="form-control" id="address" placeholder="예: oo도 OO시 OO구 도로명주소">
+
+            </div>
+            <div class="form-group">
+                <label for="number">수량</label>
+                <input min=1 class="form-control" id="number" type="number" placeholder=" -- 수량을 선택해주세요 -- ">
+
+            </div>
+
+
+
+            <button onclick="coma()" type="button" class="btn btn-primary">주문하기</button>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">주문자 성함</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">주소</th>
+                    <th scope="col">수량</th>
+                </tr>
+            </thead>
+            <tbody id="purchases-box">
+
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+
+    </div>
+</body>
+
+</html>
